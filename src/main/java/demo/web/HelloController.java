@@ -3,15 +3,18 @@ package demo.web;
 import demo.domain.City;
 import demo.domain.CityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
+import java.util.Map;
 
 /**
  * Created by MMARCZYK on 2015-07-02.
  */
-@RestController
+@Controller
 public class HelloController {
 
     @Autowired
@@ -19,8 +22,16 @@ public class HelloController {
 
     @RequestMapping("/")
     public String home() {
-        City city = cityRepository.findByNameAndStateAllIgnoringCase("new york", "ny");
-        List<City> cities = cityRepository.findAll();
-        return "found: " + cities.size()+"<br/>" + (city != null ? city.toString() : null);
+        return "home";
+    }
+
+    @RequestMapping("/city/{name}/{state}")
+    public String city(@PathVariable("name") String name, @PathVariable("state") String state, Model model){
+        City city = cityRepository.findByNameAndStateAllIgnoringCase(name, state);
+
+        if (city != null){
+            model.addAttribute("city", city);
+        }
+        return "city";
     }
 }
