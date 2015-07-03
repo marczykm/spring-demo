@@ -1,23 +1,30 @@
 package demo.web;
 
 import demo.domain.City;
-import demo.domain.CityRepository;
+import demo.service.CityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 /**
  * Created by MMARCZYK on 2015-07-03.
  */
 @RestController
 @RequestMapping("/rest")
-public class SiteRestController {
+public class CityRestController {
     @Autowired
-    CityRepository cityRepository;
+    private CityService cityService;
+
+    @RequestMapping("/city")
+    public List<City> findAll(){
+        return cityService.findAll();
+    }
 
     @RequestMapping("/city/{name}/{state}")
     public City city(@PathVariable("name") String name, @PathVariable("state") String state){
-        return cityRepository.findByNameAndStateAllIgnoringCase(name, state);
+        return cityService.findOneByNameAndStateIgnoreCase(name, state);
     }
 }

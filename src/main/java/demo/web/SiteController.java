@@ -2,6 +2,7 @@ package demo.web;
 
 import demo.domain.City;
 import demo.domain.CityRepository;
+import demo.service.CityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class SiteController {
 
     @Autowired
-    CityRepository cityRepository;
+    private CityService cityService;
 
     @RequestMapping("/")
     public String home() {
@@ -24,7 +25,7 @@ public class SiteController {
 
     @RequestMapping("/city/{name}/{state}")
     public String city(@PathVariable("name") String name, @PathVariable("state") String state, Model model){
-        City city = cityRepository.findByNameAndStateAllIgnoringCase(name, state);
+        City city = cityService.findOneByNameAndStateIgnoreCase(name, state);
 
         if (city != null){
             model.addAttribute("city", city);
