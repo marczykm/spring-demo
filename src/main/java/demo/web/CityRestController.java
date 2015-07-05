@@ -19,12 +19,12 @@ public class CityRestController {
     private CityService cityService;
 
     @RequestMapping("/city")
-    public List<City> citiesAll(){
+    public List<City> findAll(){
         return cityService.findAll();
     }
 
     @RequestMapping("/city/{name}/{state}")
-    public City cityDetails(@PathVariable("name") String name, @PathVariable("state") String state){
+    public City city(@PathVariable("name") String name, @PathVariable("state") String state){
         return cityService.findOneByNameAndStateIgnoreCase(name, state);
     }
 }
