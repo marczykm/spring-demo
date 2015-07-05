@@ -1,7 +1,6 @@
 package demo.web;
 
 import demo.domain.City;
-import demo.domain.CityRepository;
 import demo.service.CityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
